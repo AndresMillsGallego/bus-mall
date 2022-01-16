@@ -31,7 +31,6 @@ h1 {
   grid-column: 1/2;
   border-bottom: 5px solid;
   padding-bottom: 1rem;
-  margin-right: 5%;
 }
 
 h2{
@@ -115,5 +114,4 @@ footer {
   padding-bottom: 1rem;
   font-weight: bolder;
   color: dodgerblue;
-  margin-left: 5%;
 }
