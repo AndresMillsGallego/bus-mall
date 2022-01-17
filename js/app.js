@@ -1,12 +1,13 @@
 'use strict';
 
 //Global variables up here at the top
+//Put the names into this array to easily make them as objects.
 let productNameArray = ['bag','banana','bathroom','boots','breakfast','bubblegum','chair','cthulhu','dog-duck','dragon','pen','pet-sweep','scissors','shark','tauntaun','unicorn','water-can','wine-glass'];
 let productArray = [];
 let numberArray = [];
 let numberVariable = 3; // This variable sets the number of products/images to display
 let clickCounter = 0;
-let maxClickValue = 25;
+let maxClickValue = 3;
 
 const productSection = document.querySelector('section');
 const myButton = document.querySelector('button');
@@ -37,7 +38,7 @@ function randomNumber() {
 }
 
 //Function below makes an array of unique random numbers.  The length of the array is determined in the "number" parameter.
-function creatNumberArray(number) {
+function createNumberArray(number) {
   while (numberArray.length < number) {
     let num = randomNumber();
     if (numberArray.indexOf(num) === -1) {
@@ -45,7 +46,7 @@ function creatNumberArray(number) {
     }
   }
 }
-creatNumberArray(numberVariable);
+createNumberArray(numberVariable);
 
 // This function is to specifically render images since it calls for src/alt data.
 //sets an id to each element that can be used to overwrite the content.
@@ -71,9 +72,9 @@ renderImages();
 
 function displayResults() {
   for (let i = 0; i < productArray.length; i++) {
-    let message = `${productArray[i].name}: views(${productArray[i].views}) clicks(${productArray[i].hasBeenClicked})`;
+    let results = `${productArray[i].name}: views(${productArray[i].views}) clicks(${productArray[i].hasBeenClicked})`;
     let li = document.createElement('li');
-    li.textContent = message;
+    li.textContent = results;
     resultsUl.appendChild(li);
   }
   myButton.className = '';
@@ -97,9 +98,8 @@ function handleClick(event) {
     alert('Thank you for completing this survey.  Please click the "View Results" button to see the results.');
   }
   numberArray = [];
-  creatNumberArray(numberVariable);
+  createNumberArray(numberVariable);
   renderImages();
 }
 
 productSection.addEventListener('click',handleClick);
-
