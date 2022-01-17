@@ -25,7 +25,7 @@ header {
 h1 {
   text-align: center;
   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: bolder;
   color: dodgerblue;
   grid-column: 1/2;
@@ -43,11 +43,12 @@ h2{
   color: dodgerblue;
   border-bottom: 5px solid;
 }
+
 #results {
-  grid-column: 1/2 ;
-  grid-row: 2/6;
+  grid-column: 1/2;
+  grid-row: 2/5;
   padding: .5rem;
-  margin-right: 1rem;
+  margin-right: 2rem;
   border: 5px solid lightslategray;
   font-size: .8rem;
   background-color:maroon;
@@ -58,7 +59,7 @@ h2{
   grid-row: 2/3;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  /* I left align-items set to default since it drives me crazy not having the images the same size. */
 }
 
 #images img {
@@ -68,6 +69,7 @@ h2{
 
 #images img:hover {
   cursor: pointer;
+  border-color:red;
 }
 
 article {
@@ -109,7 +111,7 @@ footer {
 }
 
 .fa-bus {
-  font-size: 2rem;
+  font-size: 3rem;
   border-bottom: 5px solid;
   padding-bottom: 1rem;
   font-weight: bolder;
