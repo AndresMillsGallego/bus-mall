@@ -78,6 +78,18 @@ function displayResults() {
     resultsUl.appendChild(li);
   }
   myButton.className = '';
+  createResetButton();
+}
+
+function createResetButton() {
+  const footer =  document.querySelector('footer');
+  let reset = document.createElement('button');
+  reset.setAttribute('id','reset');
+  let link = document.createElement('a');
+  link.textContent = 'Reset Application';
+  link.href = 'index.html';
+  reset.appendChild(link);
+  footer.appendChild(reset);
 }
 
 function handleClick(event) {
