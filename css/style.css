@@ -3,12 +3,12 @@
 }
 
 body {
-  width: 90%;
+  width: 1060px;
   height: 100vh;
   margin: 30px auto;
   display: grid;
-  grid-template-columns: 25% 25% 25% 25%;
-  grid-template-rows: 10% min-content 1fr 10%;
+  grid-template-columns: 25% 75%;
+  grid-template-rows: 10% min-content 10%;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   background-color: wheat;
 }
@@ -43,20 +43,22 @@ h2{
   border-bottom: 5px solid;
 }
 
+#imageSection {
+  display: flex;
+  flex-direction: column;
+}
 #results {
-  grid-row: 2/5;
+  grid-row: auto;
   grid-column: 1;
-  padding: .5rem;
-  margin-right: 2rem;
+  padding: 1rem;
   border: 5px solid lightslategray;
   font-size: .8rem;
   background-color:maroon;
 }
 
 #images {
-  grid-column: 2/5;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   flex-wrap: wrap;
   /* I left align-items set to default since it drives me crazy not having the images the same size. */
 }
@@ -74,9 +76,15 @@ h2{
 }
 
 article {
-  grid-column: 2/5;
-  grid-row: 3/4;
-  margin: 2rem;
+  margin: auto;
+  width: 90%;
+  line-height: 1.25rem;
+  color:saddlebrown;
+  font-weight: bold;
+}
+
+p {
+  margin: 2rem 0;
 }
 
 footer button {
@@ -114,8 +122,10 @@ li:nth-child(even) {
 }
 footer {
   width: 600px;
-  grid-column: 3/4;
-  grid-row: 4/5;
+  grid-row: 4;
+  grid-column: 2;
+  justify-self: center;
+  
 }
 
 .fa-bus {

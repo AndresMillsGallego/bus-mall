@@ -108,10 +108,11 @@ function handleClick(event) {
     myButton.className = 'myButton';
     myButton.addEventListener('click', displayResults);
     alert('Thank you for completing this survey.  Please click the "View Results" button to see the results.');
+  } else {
+    numberArray = [];
+    createNumberArray(numberVariable);
+    renderImages();
   }
-  numberArray = [];
-  createNumberArray(numberVariable);
-  renderImages();
 }
 
 productSection.addEventListener('click',handleClick);
