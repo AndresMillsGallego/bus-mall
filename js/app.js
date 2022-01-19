@@ -10,9 +10,8 @@ let uniqueNumberVariable = imageElementQuantity * 2;//Added this separate variab
 let clickCounter = 0;
 let maxClickValue = 25; //Set this to 25 for lab11
 
-const productSection = document.querySelector('section');
-const myButton = document.querySelector('button');
-const resultsUl = document.querySelector('ul');
+const productSection = document.getElementById('imageSection');
+const chartInfo = document.getElementById('productChart');
 
 //Constructor stored here
 function Product(name, fileType = 'jpg') {
@@ -48,7 +47,7 @@ function createNumberArray(number) {
   }
 }
 createNumberArray(uniqueNumberVariable);
-console.log(numberArray);
+
 // This function is to specifically render images since it calls for src/alt data.
 //sets an id to each element that can be used to overwrite the content.
 function createImageElement() {
@@ -72,31 +71,48 @@ function renderImages() {
     productArray[arrayNumber].views++;
   }
   createNumberArray(uniqueNumberVariable);
-  console.log(numberArray);
 }
 renderImages();
 
-function displayResults() {
-  for (let i = 0; i < productArray.length; i++) {
-    let results = `${productArray[i].name}: views(${productArray[i].views}) clicks(${productArray[i].hasBeenClicked})`;
-    let li = document.createElement('li');
-    li.textContent = results;
-    resultsUl.appendChild(li);
+const myChart = new Chart(chartInfo, {
+  type: 'bar',
+  data: {
+    labels: productArray,
+    datasets: [{
+      label: 'Number of Views',
+      data: [],
+      backgroundColor: [
+        'red'
+      ],
+      borderColor: [
+        'blue'
+      ],
+      borderWidth: 2
+    }]
   }
-  myButton.className = '';
-  createResetButton();
-}
+});
 
-function createResetButton() {
-  const footer =  document.querySelector('footer');
-  let reset = document.createElement('button');
-  reset.setAttribute('id','reset');
-  let link = document.createElement('a');
-  link.textContent = 'Reset Application';
-  link.href = 'index.html';
-  reset.appendChild(link);
-  footer.appendChild(reset);
-}
+// function displayResults() {
+//   for (let i = 0; i < productArray.length; i++) {
+//     let results = `${productArray[i].name}: views(${productArray[i].views}) clicks(${productArray[i].hasBeenClicked})`;
+//     let li = document.createElement('li');
+//     li.textContent = results;
+//     resultsUl.appendChild(li);
+//   }
+//   myButton.className = '';
+//   createResetButton();
+// }
+
+// function createResetButton() {
+//   const footer =  document.querySelector('footer');
+//   let reset = document.createElement('button');
+//   reset.setAttribute('id','reset');
+//   let link = document.createElement('a');
+//   link.textContent = 'Reset Application';
+//   link.href = 'index.html';
+//   reset.appendChild(link);
+//   footer.appendChild(reset);
+// }
 
 function handleClick(event) {
   if (event.target === productSection) {
@@ -110,10 +126,7 @@ function handleClick(event) {
     clickCounter++;
   }
   if (clickCounter === maxClickValue) {
-    productSection.removeEventListener('click',handleClick);
-    myButton.className = 'myButton';
-    myButton.addEventListener('click', displayResults);
-    alert('Thank you for completing this survey.  Please click the "View Results" button to see the results.');
+    //Put the chart render code here
   } else {
     renderImages();
   }
