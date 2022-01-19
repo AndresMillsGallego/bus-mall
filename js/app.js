@@ -5,9 +5,10 @@
 let productNameArray = ['bag','banana','bathroom','boots','breakfast','bubblegum','chair','cthulhu','dog-duck','dragon','pen','pet-sweep','scissors','shark','tauntaun','unicorn','water-can','wine-glass'];
 let productArray = [];
 let numberArray = [];
-let numberVariable = 3; // This variable sets the number of products/images to display
+let imageElementQuantity = 3; // This variable sets the number of products/images to display
+let uniqueNumberVariable = imageElementQuantity * 2;//Added this separate variable to ensure 3 unique numbers that don't repeat
 let clickCounter = 0;
-let maxClickValue = 3; //Set this to 25 for lab11
+let maxClickValue = 25; //Set this to 25 for lab11
 
 const productSection = document.querySelector('section');
 const myButton = document.querySelector('button');
@@ -46,12 +47,12 @@ function createNumberArray(number) {
     }
   }
 }
-createNumberArray(numberVariable);
-
+createNumberArray(uniqueNumberVariable);
+console.log(numberArray);
 // This function is to specifically render images since it calls for src/alt data.
 //sets an id to each element that can be used to overwrite the content.
 function createImageElement() {
-  for (let i = 0; i < numberArray.length; i++) {
+  for (let i = 0; i < imageElementQuantity; i++) {
     let productImage = document.createElement('img');
     productImage.setAttribute('id',i);
     productSection.appendChild(productImage);
@@ -59,14 +60,19 @@ function createImageElement() {
 }
 createImageElement();
 
-//This is the function that actually renders the images.  The quantity of images is determined by the length of numberArray.
+// This is the function that actually renders the images.  The quantity of images is determined by the length of numberArray.
+//I changed to use 2 different variables so I could use one to create the image elements, and another to render the images making sure they don't repeat.
 function renderImages() {
-  for (let i = 0; i < numberArray.length; i++) {
+  for (let i = 0; i < imageElementQuantity; i++) {
     let image = document.getElementById(i);
-    image.src = productArray[numberArray[i]].src;
-    image.alt = productArray[numberArray[i]].alt;
-    productArray[numberArray[i]].views++;
+    let arrayNumber = numberArray.shift();
+    console.log(arrayNumber);
+    image.src = productArray[arrayNumber].src;
+    image.alt = productArray[arrayNumber].alt;
+    productArray[arrayNumber].views++;
   }
+  createNumberArray(uniqueNumberVariable);
+  console.log(numberArray);
 }
 renderImages();
 
@@ -109,8 +115,6 @@ function handleClick(event) {
     myButton.addEventListener('click', displayResults);
     alert('Thank you for completing this survey.  Please click the "View Results" button to see the results.');
   } else {
-    numberArray = [];
-    createNumberArray(numberVariable);
     renderImages();
   }
 }
