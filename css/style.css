@@ -48,7 +48,7 @@ h2{
   flex-direction: column;
 }
 #results {
-  grid-row: auto;
+  grid-row:auto;
   grid-column: 1;
   padding: 1rem;
   border: 5px solid lightslategray;
@@ -88,7 +88,6 @@ p {
 }
 
 footer button {
-  grid-row: 2/4;
   margin-left: auto;
   margin-right: 4rem;
   padding: 1rem 2rem;
@@ -125,7 +124,6 @@ footer {
   grid-row: 4;
   grid-column: 2;
   justify-self: center;
-  
 }
 
 .fa-bus {

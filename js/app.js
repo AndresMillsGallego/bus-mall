@@ -7,7 +7,7 @@ let productArray = [];
 let numberArray = [];
 let numberVariable = 3; // This variable sets the number of products/images to display
 let clickCounter = 0;
-let maxClickValue = 3;
+let maxClickValue = 3; //Set this to 25 for lab11
 
 const productSection = document.querySelector('section');
 const myButton = document.querySelector('button');
