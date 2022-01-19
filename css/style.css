@@ -114,6 +114,7 @@ ul:last-child {
 li {
   margin: .75rem 0;
   color:aqua;
+  text-transform: capitalize;
 }
 
 li:nth-child(even) {
