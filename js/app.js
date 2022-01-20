@@ -13,7 +13,6 @@ let maxClickValue = 25; //Set this to 25 for lab11
 const productSection = document.getElementById('imageSection');
 const button = document.getElementById('buttonDiv');
 const chartInfo = document.getElementById('myCanvas');
-const canvasDiv = document.getElementById('productChart');
 
 //Constructor stored here
 function Product(name, fileType = 'jpg') {
@@ -88,18 +87,19 @@ function renderChart(chartType,elementId) {
   }
   const data = {
     labels: productNameArray,
+
     datasets: [{
       label: 'Number of Views',
       data: productViewsArray,
-      backgroundColor: 'red',
-      borderColor: 'blue',
+      backgroundColor: 'yellow',
+      borderColor: 'red',
       borderWidth: 2,
       hoverOffset: 4
     },
     {
       label: 'Number of Likes',
       data: productLikesArray,
-      backgroundColor: 'blue',
+      backgroundColor: 'fuchsia',
       borderColor: 'red',
       borderWidth: 2,
       hoverOffset: 4
@@ -116,8 +116,8 @@ function renderChart(chartType,elementId) {
       }
     },
   };
-  document.querySelector('canvas').style.backgroundColor = 'snow';
-  const myChart = new Chart(elementId, config);
+  document.querySelector('canvas').style.backgroundColor = '#181A18';
+  const myChart = new Chart(chartInfo, config);
 }
 
 function createButton(text) {
