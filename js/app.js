@@ -2,7 +2,7 @@
 
 //Global variables up here at the top
 //Put the names into this array to easily make them as objects.
-let productNameArray = ['bag','banana','bathroom','boots','breakfast','bubblegum','chair','cthulhu','dog-duck','dragon','pen','pet-sweep','scissors','shark','tauntaun','unicorn','water-can','wine-glass'];
+let startingNameArray = ['bag','banana','bathroom','boots','breakfast','bubblegum','chair','cthulhu','dog-duck','dragon','pen','pet-sweep','scissors','shark','tauntaun','unicorn','water-can','wine-glass'];
 let productArray = [];
 let numberArray = [];
 let imageElementQuantity = 3; // This variable sets the number of products/images to display
@@ -11,7 +11,9 @@ let clickCounter = 0;
 let maxClickValue = 25; //Set this to 25 for lab11
 
 const productSection = document.getElementById('imageSection');
-const chartInfo = document.getElementById('productChart');
+const button = document.getElementById('buttonDiv');
+const chartInfo = document.getElementById('myCanvas');
+const canvasDiv = document.getElementById('productChart');
 
 //Constructor stored here
 function Product(name, fileType = 'jpg') {
@@ -24,8 +26,8 @@ function Product(name, fileType = 'jpg') {
 }
 
 //For loop to quickly construct the product objects
-for (let i = 0; i <productNameArray.length; i++) {
-  let storeName = productNameArray[i];
+for (let i = 0; i <startingNameArray.length; i++) {
+  let storeName = startingNameArray[i];
   storeName = new Product(storeName);
 }
 
@@ -74,45 +76,74 @@ function renderImages() {
 }
 renderImages();
 
-const myChart = new Chart(chartInfo, {
-  type: 'bar',
-  data: {
-    labels: productArray,
+//I am including a parameter that takes chart type as an argument.  That way I can render different charts with the same function.
+function renderChart(chartType,elementId) {
+  let productNameArray = [];
+  let productViewsArray = [];
+  let productLikesArray = [];
+  for (let i = 0; i < productArray.length; i++) {
+    productNameArray.push(productArray[i].name);
+    productViewsArray.push(productArray[i].views);
+    productLikesArray.push(productArray[i].hasBeenClicked);
+  }
+  const data = {
+    labels: productNameArray,
     datasets: [{
       label: 'Number of Views',
-      data: [],
-      backgroundColor: [
-        'red'
-      ],
-      borderColor: [
-        'blue'
-      ],
-      borderWidth: 2
+      data: productViewsArray,
+      backgroundColor: 'red',
+      borderColor: 'blue',
+      borderWidth: 2,
+      hoverOffset: 4
+    },
+    {
+      label: 'Number of Likes',
+      data: productLikesArray,
+      backgroundColor: 'blue',
+      borderColor: 'red',
+      borderWidth: 2,
+      hoverOffset: 4
     }]
+  };
+  const config = {
+    type: chartType,
+    data: data,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    },
+  };
+  document.querySelector('canvas').style.backgroundColor = 'snow';
+  const myChart = new Chart(elementId, config);
+}
+
+function createButton(text) {
+  const buttonDiv =  document.getElementById('buttonDiv');
+  let button = document.createElement('button');
+  button.setAttribute('id', text);
+  button.textContent = text;
+  buttonDiv.appendChild(button);
+}
+
+function buttonClick(event) {
+  if (event.target.id === 'Reset') {
+    window.location.reload();
   }
-});
-
-// function displayResults() {
-//   for (let i = 0; i < productArray.length; i++) {
-//     let results = `${productArray[i].name}: views(${productArray[i].views}) clicks(${productArray[i].hasBeenClicked})`;
-//     let li = document.createElement('li');
-//     li.textContent = results;
-//     resultsUl.appendChild(li);
-//   }
-//   myButton.className = '';
-//   createResetButton();
-// }
-
-// function createResetButton() {
-//   const footer =  document.querySelector('footer');
-//   let reset = document.createElement('button');
-//   reset.setAttribute('id','reset');
-//   let link = document.createElement('a');
-//   link.textContent = 'Reset Application';
-//   link.href = 'index.html';
-//   reset.appendChild(link);
-//   footer.appendChild(reset);
-// }
+  // if(event.target.id === 'Pie') {
+  //   let pieCanvas = document.createElement('canvas');
+  //   canvasDiv.appendChild(pieCanvas);
+  //   renderChart('pie', pieCanvas);
+  // }
+  // if (event.target.id === 'Line') {
+  //   let lineCanvas = document.createElement('canvas');
+  //   canvasDiv.appendChild(lineCanvas);
+  //   renderChart('line',lineCanvas);
+  //   renderChart('line');
+  // }
+}
 
 function handleClick(event) {
   if (event.target === productSection) {
@@ -126,10 +157,18 @@ function handleClick(event) {
     clickCounter++;
   }
   if (clickCounter === maxClickValue) {
-    //Put the chart render code here
+    productSection.removeEventListener('click',handleClick);
+    button.addEventListener('click', buttonClick);
+    let buttonDiv = document.getElementById('buttonDiv');
+    buttonDiv.setAttribute('class','buttons');
+    renderChart('bar',chartInfo);
+    createButton('Reset');
+    // createButton('Line');
+    // createButton('Pie');
   } else {
     renderImages();
   }
 }
 
 productSection.addEventListener('click',handleClick);
+
