@@ -13,6 +13,7 @@ let maxClickValue = 5; //Set this to 25 for lab11
 const productSection = document.getElementById('imageSection');
 const button = document.getElementById('buttonDiv');
 const chartInfo = document.getElementById('myCanvas');
+const chartPage = document.getElementById('myCanvas2');
 
 //Constructor stored here
 function Product(name, fileType = 'jpg') {
@@ -76,7 +77,7 @@ function renderImages() {
 renderImages();
 
 //I am including a parameter that takes chart type as an argument.  That way I can render different charts with the same function.
-function renderChart(chartType,chartInfo) {
+function renderChart(chartType, elementId) {
   let productNameArray = [];
   let productViewsArray = [];
   let productLikesArray = [];
@@ -145,7 +146,7 @@ function renderChart(chartType,chartInfo) {
     },
   };
   document.querySelector('canvas').style.backgroundColor = '#181A18';
-  const myChart = new Chart(chartInfo, config);
+  const myChart = new Chart(elementId, config);
 }
 
 function createButton(text) {
@@ -160,11 +161,10 @@ function buttonClick(event) {
   if (event.target.id === 'Reset') {
     window.location.reload();
   }
-  // if(event.target.id === 'Pie') {
-  //   let pieCanvas = document.createElement('canvas');
-  //   canvasDiv.appendChild(pieCanvas);
-  //   renderChart('pie', pieCanvas);
-  // }
+  if(event.target.id === 'Pie') {
+    window.location.href = 'chart.html';
+    renderChart('pie', chartPage);
+  }
   // if (event.target.id === 'Line') {
   //   let lineCanvas = document.createElement('canvas');
   //   canvasDiv.appendChild(lineCanvas);
@@ -186,13 +186,14 @@ function handleClick(event) {
   }
   if (clickCounter === maxClickValue) {
     productSection.removeEventListener('click',handleClick);
+    document.removeEventListener('load', createImageElement, renderImages);
     button.addEventListener('click', buttonClick);
     let buttonDiv = document.getElementById('buttonDiv');
     buttonDiv.setAttribute('class','buttons');
     renderChart('bar',chartInfo);
+    createButton('Line');
     createButton('Reset');
-    // createButton('Line');
-    // createButton('Pie');
+    createButton('Pie');
   } else {
     renderImages();
   }
