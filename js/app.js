@@ -11,10 +11,14 @@ let imageElementQuantity = 3; // This variable sets the number of products/image
 let uniqueNumberVariable = imageElementQuantity * 2;//Added this separate variable to ensure 3 unique numbers that don't repeat
 let clickCounter = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 let maxClickValue = 25; //Set this to 25 for lab11
 =======
 let maxClickValue = 25; //Set this to 25 for labe1
 >>>>>>> chartjs
+=======
+let maxClickValue = 25; //Set this to 25 for labe1
+>>>>>>> 206965dca2ad403dfc37d4a21f4a0aa307f6d53a
 
 const productSection = document.getElementById('imageSection');
 const button = document.getElementById('buttonDiv');

@@ -51,6 +51,7 @@ h1 {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 article {
   margin: auto;
   width: 90%;
@@ -106,13 +107,13 @@ footer {
 
 =======
 >>>>>>> chartjs
+=======
+>>>>>>> 206965dca2ad403dfc37d4a21f4a0aa307f6d53a
 .fa-bus {
   font-size: 3rem;
   border-bottom: 5px double;
   padding-bottom: 1rem;
   font-weight: bolder;
-  color: dodgerblue;
-}
 
 section {
   display: flex;
