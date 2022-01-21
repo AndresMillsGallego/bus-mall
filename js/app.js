@@ -8,7 +8,7 @@ let numberArray = [];
 let imageElementQuantity = 3; // This variable sets the number of products/images to display
 let uniqueNumberVariable = imageElementQuantity * 2;//Added this separate variable to ensure 3 unique numbers that don't repeat
 let clickCounter = 0;
-let maxClickValue = 25; //Set this to 25 for lab11
+let maxClickValue = 5; //Set this to 25 for lab11
 
 const productSection = document.getElementById('imageSection');
 const button = document.getElementById('buttonDiv');
@@ -76,7 +76,7 @@ function renderImages() {
 renderImages();
 
 //I am including a parameter that takes chart type as an argument.  That way I can render different charts with the same function.
-function renderChart(chartType,elementId) {
+function renderChart(chartType,chartInfo) {
   let productNameArray = [];
   let productViewsArray = [];
   let productLikesArray = [];
@@ -92,7 +92,8 @@ function renderChart(chartType,elementId) {
       label: 'Number of Views',
       data: productViewsArray,
       backgroundColor: 'yellow',
-      borderColor: 'red',
+      borderColor: 'white',
+      borderRadius: 2,
       borderWidth: 2,
       hoverOffset: 4
     },
@@ -100,7 +101,8 @@ function renderChart(chartType,elementId) {
       label: 'Number of Likes',
       data: productLikesArray,
       backgroundColor: 'fuchsia',
-      borderColor: 'red',
+      borderColor: 'white',
+      borderRadius: 2,
       borderWidth: 2,
       hoverOffset: 4
     }]
@@ -111,7 +113,16 @@ function renderChart(chartType,elementId) {
     options: {
       scales: {
         y: {
+          ticks: {
+            color: 'lime'
+          },
           beginAtZero: true
+        },
+        x: {
+          ticks: {
+            color: 'aqua'
+          },
+          beginatZero: true
         }
       }
     },
