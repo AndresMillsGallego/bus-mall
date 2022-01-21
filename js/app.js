@@ -81,7 +81,8 @@ function renderChart(chartType,chartInfo) {
   let productViewsArray = [];
   let productLikesArray = [];
   for (let i = 0; i < productArray.length; i++) {
-    productNameArray.push(productArray[i].name);
+    let capName = productArray[i].name.charAt(0).toUpperCase() + productArray[i].name.slice(1);
+    productNameArray.push(capName);
     productViewsArray.push(productArray[i].views);
     productLikesArray.push(productArray[i].hasBeenClicked);
   }
@@ -111,6 +112,16 @@ function renderChart(chartType,chartInfo) {
     type: chartType,
     data: data,
     options: {
+      plugins: {
+        legend: {
+          labels: {
+            color: '#1E90FF',
+            font: {
+              size: 18
+            }
+          }
+        }
+      },
       scales: {
         y: {
           ticks: {
