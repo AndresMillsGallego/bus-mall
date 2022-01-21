@@ -122,12 +122,18 @@ function renderChart(chartType,chartInfo) {
           }
         }
       },
+      layout: {
+        padding: 20
+      },
       scales: {
         y: {
           ticks: {
             color: 'lime'
           },
-          beginAtZero: true
+          beginAtZero: true,
+          grid: {
+            color: 'lightgrey'
+          }
         },
         x: {
           ticks: {
