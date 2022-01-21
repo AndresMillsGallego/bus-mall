@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */ // <= that was the only way I could get rid of the annoying squiggly red lines under my Chart
+/* eslint-disable no-undef */
 'use strict';
 
 //Global variables up here at the top
@@ -8,12 +10,12 @@ let numberArray = [];
 let imageElementQuantity = 3; // This variable sets the number of products/images to display
 let uniqueNumberVariable = imageElementQuantity * 2;//Added this separate variable to ensure 3 unique numbers that don't repeat
 let clickCounter = 0;
-let maxClickValue = 5; //Set this to 25 for lab11
+let maxClickValue = 25; //Set this to 25 for labe1
 
 const productSection = document.getElementById('imageSection');
 const button = document.getElementById('buttonDiv');
 const chartInfo = document.getElementById('myCanvas');
-const chartPage = document.getElementById('myCanvas2');
+const chartSection = document.getElementById('extraCharts');
 
 //Constructor stored here
 function Product(name, fileType = 'jpg') {
@@ -51,7 +53,7 @@ function createNumberArray(number) {
 createNumberArray(uniqueNumberVariable);
 
 // This function is to specifically render images since it calls for src/alt data.
-//sets an id to each element that can be used to overwrite the content.
+//sets an id to each element that can be used to overwrite the content.  This makes it so you can adjust the quantity of image elements from here and don't need to hard code it to the HTML
 function createImageElement() {
   for (let i = 0; i < imageElementQuantity; i++) {
     let productImage = document.createElement('img');
@@ -82,7 +84,7 @@ function renderChart(chartType, elementId) {
   let productViewsArray = [];
   let productLikesArray = [];
   for (let i = 0; i < productArray.length; i++) {
-    let capName = productArray[i].name.charAt(0).toUpperCase() + productArray[i].name.slice(1);
+    let capName = productArray[i].name.charAt(0).toUpperCase() + productArray[i].name.slice(1);//I could have done this in one line, but this is more readable.
     productNameArray.push(capName);
     productViewsArray.push(productArray[i].views);
     productLikesArray.push(productArray[i].hasBeenClicked);
@@ -94,19 +96,25 @@ function renderChart(chartType, elementId) {
       label: 'Number of Views',
       data: productViewsArray,
       backgroundColor: 'yellow',
-      borderColor: 'white',
+      borderColor: 'azure',
       borderRadius: 2,
       borderWidth: 2,
-      hoverOffset: 4
+      hoverOffset: 4,
+      pointRadius: 5,
+      pointHoverRadius: 6,
+      lineTension: .1
     },
     {
       label: 'Number of Likes',
       data: productLikesArray,
       backgroundColor: 'fuchsia',
-      borderColor: 'white',
+      borderColor: 'azure',
       borderRadius: 2,
       borderWidth: 2,
-      hoverOffset: 4
+      hoverOffset: 4,
+      pointRadius: 5,
+      pointHoverRadius: 6,
+      lineTension: .1
     }]
   };
   const config = {
@@ -149,6 +157,7 @@ function renderChart(chartType, elementId) {
   const myChart = new Chart(elementId, config);
 }
 
+//The function is for creating buttons.  The text parameter assigns the id as well as the text content.
 function createButton(text) {
   const buttonDiv =  document.getElementById('buttonDiv');
   let button = document.createElement('button');
@@ -157,22 +166,34 @@ function createButton(text) {
   buttonDiv.appendChild(button);
 }
 
+//This handles what happens when one of the newly rendered buttons is clicked.  I was able to offer two additional chart type options as well as a reset button.
 function buttonClick(event) {
   if (event.target.id === 'Reset') {
     window.location.reload();
   }
-  if(event.target.id === 'Pie') {
-    window.location.href = 'chart.html';
-    renderChart('pie', chartPage);
+  if(event.target.id === 'Doughnut') {
+    let canvas = document.createElement('canvas');
+    canvas.setAttribute('id', 'pieChart');
+    chartSection.appendChild(canvas);
+    document.getElementById('pieChart').style.backgroundColor = '#181A18';
+    renderChart('doughnut', canvas);
+    document.querySelector('footer').scrollIntoView({behavior: 'smooth'});
+    document.getElementById('Doughnut').id = 'oldDoughnut';
+    document.getElementById('Line').id = 'oldLine';
   }
-  // if (event.target.id === 'Line') {
-  //   let lineCanvas = document.createElement('canvas');
-  //   canvasDiv.appendChild(lineCanvas);
-  //   renderChart('line',lineCanvas);
-  //   renderChart('line');
-  // }
+  if (event.target.id === 'Line') {
+    let canvas = document.createElement('canvas');
+    canvas.setAttribute('id', 'lineChart');
+    chartSection.appendChild(canvas);
+    document.getElementById('lineChart').style.backgroundColor = '#181A18';
+    renderChart('line', canvas);
+    document.querySelector('footer').scrollIntoView({behavior: 'smooth'});
+    document.getElementById('Doughnut').id = 'oldDoughnut';
+    document.getElementById('Line').id = 'oldLine';
+  }
 }
 
+//The main code for selecting the images shown to the user.
 function handleClick(event) {
   if (event.target === productSection) {
     alert('Please click on one of the images');
@@ -186,14 +207,13 @@ function handleClick(event) {
   }
   if (clickCounter === maxClickValue) {
     productSection.removeEventListener('click',handleClick);
-    document.removeEventListener('load', createImageElement, renderImages);
     button.addEventListener('click', buttonClick);
     let buttonDiv = document.getElementById('buttonDiv');
     buttonDiv.setAttribute('class','buttons');
     renderChart('bar',chartInfo);
     createButton('Line');
     createButton('Reset');
-    createButton('Pie');
+    createButton('Doughnut');
   } else {
     renderImages();
   }

@@ -4,7 +4,7 @@
 
 body {
   width: 1060px;
-  height: 100vh;
+  height: 100%;
   margin: 30px auto;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   background-color: wheat;
@@ -24,7 +24,7 @@ h1 {
   font-size: 1.75rem;
   font-weight: bolder;
   color: dodgerblue;
-  border-bottom: 5px solid;
+  border-bottom: 5px double;
   padding-bottom: 1rem;
 }
 
@@ -33,12 +33,14 @@ h1 {
   width: 100%;
   justify-content: space-evenly;
   border: 5px solid maroon;
+  border-radius: 5px;
   padding: 3rem 0;
 }
 
 #imageSection img {
   width: 30%;
   border: 5px solid lightslategray;
+  border-radius: 5px;
   max-width: 240px;
   max-height: 280px;
 }
@@ -50,7 +52,7 @@ h1 {
 
 .fa-bus {
   font-size: 3rem;
-  border-bottom: 5px solid;
+  border-bottom: 5px double;
   padding-bottom: 1rem;
   font-weight: bolder;
   color: dodgerblue;
@@ -61,11 +63,16 @@ section {
   justify-content: space-between;
 }
 
-#productChart {
+#productCharts,
+#extraCharts {
   width: 80%;
   height: 25%;
   margin: 30px;
   border: 5px solid transparent;
+}
+
+#extraCharts {
+  margin-top: 0;
 }
 
 .buttons {
@@ -75,6 +82,7 @@ section {
   justify-content: space-evenly;
   width: 25%;
   border: 5px solid maroon;
+  border-radius: 5px;
   margin: 30px 0;
 }
 
@@ -83,10 +91,26 @@ button {
   background-color:aliceblue;
   color: dodgerblue;
   font-size: 1.25rem;
+  border: 2px solid lightslategray;
+  border-radius: 5px;
 }
 
 button:hover {
   cursor: pointer;
   font-weight: bold;
+}
+
+#oldDoughnut, 
+#oldLine {
+  text-decoration: line-through;
+  background-color: rgba(128, 128, 128, 0.513);
+  color: grey;
+  padding: .5rem;
+}
+
+#oldDoughnut:hover,
+#oldLine:hover {
+  cursor: not-allowed;
+  font-weight: lighter;
 }
 
