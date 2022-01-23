@@ -18,9 +18,10 @@ const chartInfo = document.getElementById('myCanvas');
 const chartSection = document.getElementById('extraCharts');
 
 //Constructor stored here
-function Product(name, fileType = 'jpg') {
+function Product(name, fileType) {
   this.name = name;
   this.src = `img/${name}.${fileType}`;
+  this.fileType = fileType;
   this.alt = name;
   this.views = 0;
   this.hasBeenClicked = 0;
@@ -28,13 +29,14 @@ function Product(name, fileType = 'jpg') {
 }
 
 //For loop to quickly construct the product objects
-for (let i = 0; i <startingNameArray.length; i++) {
-  let storeName = startingNameArray[i];
-  storeName = new Product(storeName);
-}
+// for (let i = 0; i <startingNameArray.length; i++) {
+//   let storeName = startingNameArray[i];
+//   storeName = new Product(storeName);
+// }
 
 //made the "sweep" object here since it's the lone object with a .png
-new Product('sweep','png');
+// new Product('sweep','png');
+
 
 //Returns a random number based on the length of the productArray
 function randomNumber() {
@@ -50,7 +52,7 @@ function createNumberArray(number) {
     }
   }
 }
-createNumberArray(uniqueNumberVariable);
+// createNumberArray(uniqueNumberVariable);
 
 // This function is to specifically render images since it calls for src/alt data.
 //sets an id to each element that can be used to overwrite the content.  This makes it so you can adjust the quantity of image elements from here and don't need to hard code it to the HTML
@@ -61,7 +63,7 @@ function createImageElement() {
     productSection.appendChild(productImage);
   }
 }
-createImageElement();
+// createImageElement();
 
 // This is the function that actually renders the images.  The quantity of images is determined by the length of numberArray.
 //I changed to use 2 different variables so I could use one to create the image elements, and another to render the images making sure they don't repeat.
@@ -69,14 +71,13 @@ function renderImages() {
   for (let i = 0; i < imageElementQuantity; i++) {
     let image = document.getElementById(i);
     let arrayNumber = numberArray.shift();
-    console.log(arrayNumber);
     image.src = productArray[arrayNumber].src;
     image.alt = productArray[arrayNumber].alt;
     productArray[arrayNumber].views++;
   }
   createNumberArray(uniqueNumberVariable);
 }
-renderImages();
+// renderImages();
 
 //I am including a parameter that takes chart type as an argument.  That way I can render different charts with the same function.
 function renderChart(chartType, elementId) {
@@ -214,10 +215,43 @@ function handleClick(event) {
     createButton('Line');
     createButton('Reset');
     createButton('Doughnut');
+    packProduct();
   } else {
     renderImages();
   }
 }
 
+function packProduct() {
+  let stringyProducts = JSON.stringify(productArray);
+  localStorage.setItem('products', stringyProducts);
+}
+
+function unpackProduct() {
+  let unpackedProducts = localStorage.getItem('products');
+  if(unpackedProducts) {
+    let parsedProducts = JSON.parse(unpackedProducts);
+    for(let order of parsedProducts) {
+      let name = order.name;
+      let src = order.src;
+      let fileType = order.fileType;
+      let alt = order.alt;
+      let views = order.views;
+      let hasBeenClicked = order.hasBeenClicked;
+      let product = new Product(name, fileType);
+    }
+  } else {
+    for (let i = 0; i <startingNameArray.length; i++) {
+      let storeName = startingNameArray[i];
+      storeName = new Product(storeName, 'jpg');
+    }
+    new Product('sweep','png');
+  }
+}
+unpackProduct();
+console.log(productArray);
+createNumberArray(uniqueNumberVariable);
+createImageElement();
+renderImages();
 productSection.addEventListener('click',handleClick);
+
 
