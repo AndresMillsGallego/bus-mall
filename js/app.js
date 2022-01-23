@@ -11,6 +11,7 @@ let imageElementQuantity = 3; // This variable sets the number of products/image
 let uniqueNumberVariable = imageElementQuantity * 2;//Added this separate variable to ensure 3 unique numbers that don't repeat
 let clickCounter = 0;
 let maxClickValue = 25; //Set this to 25 for labe1
+let totalClicks = 0;
 
 const productSection = document.getElementById('imageSection');
 const button = document.getElementById('buttonDiv');
@@ -28,16 +29,6 @@ function Product(name, fileType) {
   productArray.push(this);
 }
 
-//For loop to quickly construct the product objects
-// for (let i = 0; i <startingNameArray.length; i++) {
-//   let storeName = startingNameArray[i];
-//   storeName = new Product(storeName);
-// }
-
-//made the "sweep" object here since it's the lone object with a .png
-// new Product('sweep','png');
-
-
 //Returns a random number based on the length of the productArray
 function randomNumber() {
   return Math.floor(Math.random() * productArray.length);
@@ -52,7 +43,6 @@ function createNumberArray(number) {
     }
   }
 }
-// createNumberArray(uniqueNumberVariable);
 
 // This function is to specifically render images since it calls for src/alt data.
 //sets an id to each element that can be used to overwrite the content.  This makes it so you can adjust the quantity of image elements from here and don't need to hard code it to the HTML
@@ -63,7 +53,6 @@ function createImageElement() {
     productSection.appendChild(productImage);
   }
 }
-// createImageElement();
 
 // This is the function that actually renders the images.  The quantity of images is determined by the length of numberArray.
 //I changed to use 2 different variables so I could use one to create the image elements, and another to render the images making sure they don't repeat.
@@ -77,7 +66,6 @@ function renderImages() {
   }
   createNumberArray(uniqueNumberVariable);
 }
-// renderImages();
 
 //I am including a parameter that takes chart type as an argument.  That way I can render different charts with the same function.
 function renderChart(chartType, elementId) {
@@ -171,6 +159,7 @@ function createButton(text) {
 function buttonClick(event) {
   if (event.target.id === 'Reset') {
     window.location.reload();
+    totalClicks++;
   }
   if(event.target.id === 'Doughnut') {
     let canvas = document.createElement('canvas');
@@ -181,6 +170,7 @@ function buttonClick(event) {
     document.querySelector('footer').scrollIntoView({behavior: 'smooth'});
     document.getElementById('Doughnut').id = 'oldDoughnut';
     document.getElementById('Line').id = 'oldLine';
+    totalClicks++;
   }
   if (event.target.id === 'Line') {
     let canvas = document.createElement('canvas');
@@ -191,7 +181,33 @@ function buttonClick(event) {
     document.querySelector('footer').scrollIntoView({behavior: 'smooth'});
     document.getElementById('Doughnut').id = 'oldDoughnut';
     document.getElementById('Line').id = 'oldLine';
+    totalClicks++;
   }
+  if (totalClicks > 4) {
+    let chartTypeArray = ['radar', 'pie', 'polarArea', 'bubble'];
+    for (let i = 0; i < chartTypeArray.length; i++) {
+      if (event.target.value === chartTypeArray[i]) {
+        let randomChartType = chartTypeArray[i];
+        let canvas = document.createElement('canvas');
+        canvas.setAttribute('id', randomChartType);
+        chartSection.appendChild(canvas);
+        document.getElementById(randomChartType).style.backgroundColor = '#181A18';
+        renderChart(randomChartType, canvas);
+      }
+    }
+  }
+  packClicks();
+}
+
+function packClicks() {
+  let stringyClicks = JSON.stringify(totalClicks);
+  localStorage.setItem('clicks', stringyClicks);
+}
+
+function unpackClicks() {
+  let unpackedClicks = localStorage.getItem('clicks');
+  let parsedClicks = JSON.parse(unpackedClicks);
+  totalClicks += parseInt(parsedClicks);
 }
 
 //The main code for selecting the images shown to the user.
@@ -207,25 +223,38 @@ function handleClick(event) {
     clickCounter++;
   }
   if (clickCounter === maxClickValue) {
+    packProduct();
     productSection.removeEventListener('click',handleClick);
     button.addEventListener('click', buttonClick);
     let buttonDiv = document.getElementById('buttonDiv');
     buttonDiv.setAttribute('class','buttons');
+    packProduct();
     renderChart('bar',chartInfo);
     createButton('Line');
     createButton('Reset');
     createButton('Doughnut');
-    packProduct();
   } else {
     renderImages();
   }
 }
 
+//This function is what stores the user data to localStorage.
 function packProduct() {
-  let stringyProducts = JSON.stringify(productArray);
-  localStorage.setItem('products', stringyProducts);
+  let unpackedProducts = localStorage.getItem('products');
+  if(unpackedProducts) {
+    let parsedProducts = JSON.parse(unpackedProducts);
+    //This unpacks the data if it exists and updates the views/clicks.
+    for (let i = 0; i < parsedProducts.length; i++) {
+      productArray[i].views += parsedProducts[i].views;
+      productArray[i].hasBeenClicked += parsedProducts[i].hasBeenClicked;
+    }
+  } else {
+    let stringyProducts = JSON.stringify(productArray);
+    localStorage.setItem('products', stringyProducts);
+  }
 }
 
+//Code to unpack the stored data and reinstantiate the objects/products.
 function unpackProduct() {
   let unpackedProducts = localStorage.getItem('products');
   if(unpackedProducts) {
@@ -240,6 +269,7 @@ function unpackProduct() {
       let product = new Product(name, fileType);
     }
   } else {
+    //I first instantiate the products here to keep them from duplicating. 
     for (let i = 0; i <startingNameArray.length; i++) {
       let storeName = startingNameArray[i];
       storeName = new Product(storeName, 'jpg');
@@ -247,11 +277,13 @@ function unpackProduct() {
     new Product('sweep','png');
   }
 }
+
+//Executable code goes here:
 unpackProduct();
-console.log(productArray);
 createNumberArray(uniqueNumberVariable);
 createImageElement();
 renderImages();
 productSection.addEventListener('click',handleClick);
+unpackClicks();
 
 
