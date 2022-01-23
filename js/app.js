@@ -247,6 +247,8 @@ function packProduct() {
       productArray[i].views += parsedProducts[i].views;
       productArray[i].hasBeenClicked += parsedProducts[i].hasBeenClicked;
     }
+    let stringyProducts = JSON.stringify(productArray);
+    localStorage.setItem('products', stringyProducts);
   } else {
     let stringyProducts = JSON.stringify(productArray);
     localStorage.setItem('products', stringyProducts);
