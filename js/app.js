@@ -183,32 +183,32 @@ function buttonClick(event) {
     document.getElementById('Line').id = 'oldLine';
     totalClicks++;
   }
-  if (totalClicks > 4) {
-    let chartTypeArray = ['radar', 'pie', 'polarArea', 'bubble'];
-    for (let i = 0; i < chartTypeArray.length; i++) {
-      if (event.target.value === chartTypeArray[i]) {
-        let randomChartType = chartTypeArray[i];
-        let canvas = document.createElement('canvas');
-        canvas.setAttribute('id', randomChartType);
-        chartSection.appendChild(canvas);
-        document.getElementById(randomChartType).style.backgroundColor = '#181A18';
-        renderChart(randomChartType, canvas);
-      }
-    }
-  }
-  packClicks();
+  // if (totalClicks > 4) {
+  //   let chartTypeArray = ['radar', 'pie', 'polarArea', 'bubble'];
+  //   for (let i = 0; i < chartTypeArray.length; i++) {
+  //     if (event.target.value === chartTypeArray[i]) {
+  //       let randomChartType = chartTypeArray[i];
+  //       let canvas = document.createElement('canvas');
+  //       canvas.setAttribute('id', randomChartType);
+  //       chartSection.appendChild(canvas);
+  //       document.getElementById(randomChartType).style.backgroundColor = '#181A18';
+  //       renderChart(randomChartType, canvas);
+  //     }
+  //   }
+  // }
+  // packClicks();
 }
 
-function packClicks() {
-  let stringyClicks = JSON.stringify(totalClicks);
-  localStorage.setItem('clicks', stringyClicks);
-}
+// function packClicks() {
+//   let stringyClicks = JSON.stringify(totalClicks);
+//   localStorage.setItem('clicks', stringyClicks);
+// }
 
-function unpackClicks() {
-  let unpackedClicks = localStorage.getItem('clicks');
-  let parsedClicks = JSON.parse(unpackedClicks);
-  totalClicks += parseInt(parsedClicks);
-}
+// function unpackClicks() {
+//   let unpackedClicks = localStorage.getItem('clicks');
+//   let parsedClicks = JSON.parse(unpackedClicks);
+//   totalClicks += parseInt(parsedClicks);
+// }
 
 //The main code for selecting the images shown to the user.
 function handleClick(event) {
@@ -223,16 +223,15 @@ function handleClick(event) {
     clickCounter++;
   }
   if (clickCounter === maxClickValue) {
-    packProduct();
     productSection.removeEventListener('click',handleClick);
     button.addEventListener('click', buttonClick);
     let buttonDiv = document.getElementById('buttonDiv');
     buttonDiv.setAttribute('class','buttons');
-    packProduct();
     renderChart('bar',chartInfo);
     createButton('Line');
     createButton('Reset');
     createButton('Doughnut');
+    packProduct();
   } else {
     renderImages();
   }
@@ -284,6 +283,6 @@ createNumberArray(uniqueNumberVariable);
 createImageElement();
 renderImages();
 productSection.addEventListener('click',handleClick);
-unpackClicks();
+// unpackClicks();
 
 
