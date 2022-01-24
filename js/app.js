@@ -185,7 +185,6 @@ function buttonClick(event) {
     totalClicks++;
   }
   if (totalClicks > 4) {
-    console.log('yo');
     document.getElementById('hiddenDiv').id = 'chartChoice';
   }
   packClicks();
