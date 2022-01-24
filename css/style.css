@@ -120,7 +120,7 @@ button:hover {
   flex-direction: column;
   text-align: center;
   align-items: center;
-  visibility: hidden;
+  /* visibility: hidden; */
 }
 
 #chartChoice * {

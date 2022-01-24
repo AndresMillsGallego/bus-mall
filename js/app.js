@@ -277,7 +277,7 @@ function unpackProduct() {
       let product = new Product(name, fileType);
     }
   } else {
-    //I first instantiate the products here to keep them from duplicating. 
+    //I first instantiate the products here to keep them from duplicating.
     for (let i = 0; i <startingNameArray.length; i++) {
       let storeName = startingNameArray[i];
       storeName = new Product(storeName, 'jpg');
