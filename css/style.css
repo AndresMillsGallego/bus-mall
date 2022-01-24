@@ -116,7 +116,18 @@ button:hover {
 }
 
 #hiddenDiv {
+  visibility: hidden;
+}
+
+#chartChoice > button {
+  color: darkorchid;
+  padding: .75rem 1.25rem;
+}
+
+#chartChoice  {
+  visibility: visible;
   width: 25%;
+  height: 75%;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -127,20 +138,14 @@ button:hover {
   padding: 1rem;
   color: darkorchid;
   font-weight: bold;
-  visibility: hidden;
-}
-
-#chartChoice > button {
-  color: darkorchid;
-  padding: .75rem 1.25rem;
-}
-
-#chartChoice * {
-  visibility: visible;
 }
 
 select {
   margin: 1rem 0;
   padding: .5rem;
   border-radius: 5px;
+}
+
+label {
+  margin: 1rem 0;
 }

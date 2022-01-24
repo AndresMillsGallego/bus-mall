@@ -186,9 +186,20 @@ function buttonClick(event) {
   }
   if (totalClicks > 4) {
     document.getElementById('hiddenDiv').id = 'chartChoice';
+    const adventureChart = document.querySelector('form');
+    adventureChart.addEventListener('submit', handleSubmit);
   }
   packClicks();
   console.log(totalClicks);
+}
+
+function handleSubmit(event) {
+  let userChartType = event.target.chartType.value;
+  let canvas = document.createElement('canvas');
+  canvas.setAttribute('id', userChartType);
+  chartSection.appendChild(canvas);
+  document.getElementById(userChartType).style.backgroundColor = '#181A18';
+  renderChart(userChartType, canvas);
 }
 
 function packClicks() {
