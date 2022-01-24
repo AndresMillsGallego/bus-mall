@@ -10,9 +10,9 @@ let numberArray = [];
 let imageElementQuantity = 3; // This variable sets the number of products/images to display
 let uniqueNumberVariable = imageElementQuantity * 2;//Added this separate variable to ensure 3 unique numbers that don't repeat
 let clickCounter = 0;
-let maxClickValue = 25; //Set this to 25 for labe1
+let maxClickValue = 5; //Set this to 25 for labe1
 let totalClicks = 0;
-
+console.log(totalClicks);
 const productSection = document.getElementById('imageSection');
 const button = document.getElementById('buttonDiv');
 const chartInfo = document.getElementById('myCanvas');
@@ -158,58 +158,64 @@ function createButton(text) {
 //This handles what happens when one of the newly rendered buttons is clicked.  I was able to offer two additional chart type options as well as a reset button.
 function buttonClick(event) {
   if (event.target.id === 'Reset') {
-    window.location.reload();
     totalClicks++;
+    window.location.reload();
+    window.scrollTo(0,0);
   }
-  if(event.target.id === 'Doughnut') {
+  else if (event.target.id === 'Doughnut') {
     let canvas = document.createElement('canvas');
     canvas.setAttribute('id', 'pieChart');
     chartSection.appendChild(canvas);
     document.getElementById('pieChart').style.backgroundColor = '#181A18';
     renderChart('doughnut', canvas);
-    document.querySelector('footer').scrollIntoView({behavior: 'smooth'});
+    document.getElementById('extraCharts').scrollIntoView({behavior: 'smooth'});
     document.getElementById('Doughnut').id = 'oldDoughnut';
     document.getElementById('Line').id = 'oldLine';
     totalClicks++;
   }
-  if (event.target.id === 'Line') {
+  else if (event.target.id === 'Line') {
     let canvas = document.createElement('canvas');
     canvas.setAttribute('id', 'lineChart');
     chartSection.appendChild(canvas);
     document.getElementById('lineChart').style.backgroundColor = '#181A18';
     renderChart('line', canvas);
-    document.querySelector('footer').scrollIntoView({behavior: 'smooth'});
+    document.getElementById('extraCharts').scrollIntoView({behavior: 'smooth'});
     document.getElementById('Doughnut').id = 'oldDoughnut';
     document.getElementById('Line').id = 'oldLine';
     totalClicks++;
   }
-  // if (totalClicks > 4) {
-  //   let chartTypeArray = ['radar', 'pie', 'polarArea', 'bubble'];
-  //   for (let i = 0; i < chartTypeArray.length; i++) {
-  //     if (event.target.value === chartTypeArray[i]) {
-  //       let randomChartType = chartTypeArray[i];
-  //       let canvas = document.createElement('canvas');
-  //       canvas.setAttribute('id', randomChartType);
-  //       chartSection.appendChild(canvas);
-  //       document.getElementById(randomChartType).style.backgroundColor = '#181A18';
-  //       renderChart(randomChartType, canvas);
-  //     }
-  //   }
-  // }
-  // packClicks();
+  if (totalClicks > 4) {
+    console.log('yo');
+    document.getElementById('hiddenDiv').id = 'chartChoice';
+  }
+  packClicks();
+  console.log(totalClicks);
 }
 
-// function packClicks() {
-//   let stringyClicks = JSON.stringify(totalClicks);
-//   localStorage.setItem('clicks', stringyClicks);
-// }
+function packClicks() {
+  let unpackedClicks = localStorage.getItem('clicks');
+  if (unpackedClicks) {
+    let parsedClicks = JSON.parse(unpackedClicks);
+    let stringyClicks = JSON.stringify(totalClicks);
+    localStorage.setItem('clicks', stringyClicks);
+  } else {
+  let stringyClicks = JSON.stringify(totalClicks);
+  localStorage.setItem('clicks', stringyClicks);
+}
 
-// function unpackClicks() {
-//   let unpackedClicks = localStorage.getItem('clicks');
-//   let parsedClicks = JSON.parse(unpackedClicks);
-//   totalClicks += parseInt(parsedClicks);
-// }
 
+function unpackClicks() {
+  let unpackedClicks = localStorage.getItem('clicks');
+  if(unpackedClicks) {
+    let parsedClicks = JSON.parse(unpackedClicks);
+    parsedClicks = parseInt(parsedClicks);
+    totalClicks = parsedClicks;
+    console.log(parsedClicks);
+    console.log(totalClicks);
+  } else {
+    totalClicks = 0;
+  }
+}
 //The main code for selecting the images shown to the user.
 function handleClick(event) {
   if (event.target === productSection) {
@@ -231,7 +237,6 @@ function handleClick(event) {
     createButton('Line');
     createButton('Reset');
     createButton('Doughnut');
-    packProduct();
   } else {
     renderImages();
   }
@@ -280,11 +285,11 @@ function unpackProduct() {
 }
 
 //Executable code goes here:
+unpackClicks();
 unpackProduct();
 createNumberArray(uniqueNumberVariable);
 createImageElement();
 renderImages();
 productSection.addEventListener('click',handleClick);
-// unpackClicks();
 
 

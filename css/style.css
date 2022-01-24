@@ -115,12 +115,21 @@ button:hover {
   font-weight: lighter;
 }
 
-.Select {
-  visibility: hidden;
+#buttonDiv > div{
+  display: flex;
+  flex-direction: column;
   text-align: center;
-  padding: 2px;
+  align-items: center;
+  visibility: hidden;
 }
 
+#chartChoice * {
+  visibility: visible;
+}
+
+.Select {
+  align-items: cent;
+}
 select {
-  margin-top: .5rem;
+  margin: 1rem 0;
 }
