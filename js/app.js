@@ -17,6 +17,7 @@ const productSection = document.getElementById('imageSection');
 const button = document.getElementById('buttonDiv');
 const chartInfo = document.getElementById('myCanvas');
 const chartSection = document.getElementById('extraCharts');
+const userChartSection = document.getElementById('userCharts');
 
 //Constructor stored here
 function Product(name, fileType) {
@@ -194,12 +195,14 @@ function buttonClick(event) {
 }
 
 function handleSubmit(event) {
+  event.preventDefault();
   let userChartType = event.target.chartType.value;
-  let canvas = document.createElement('canvas');
-  canvas.setAttribute('id', userChartType);
-  chartSection.appendChild(canvas);
+  let canvas2 = document.createElement('canvas');
+  canvas2.setAttribute('id', userChartType);
+  userChartSection.appendChild(canvas2);
   document.getElementById(userChartType).style.backgroundColor = '#181A18';
-  renderChart(userChartType, canvas);
+  renderChart(userChartType, canvas2);
+  document.getElementById(userChartType).scrollIntoView({behavior: 'smooth'});
 }
 
 function packClicks() {
