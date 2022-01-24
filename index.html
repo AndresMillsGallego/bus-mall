@@ -22,15 +22,18 @@
       <canvas id="myCanvas" width="600px" height="400px"></canvas>
     </div>
     <div id="buttonDiv">
-      <label class="Select">Choose your Adventure
-      <select name="ChartChoice" class="Select">
-        <option value="choose">--Choose Wisely--</option>
-        <option value="radar">Radar</option>
-        <option value="pie">Pie</option>
-        <option value="polarArea">Polar</option>
-        <option value="bubble">Bubble</option>
-      </select>
-    </label>
+      <div id="hiddenDiv">
+        <label class="Select">Choose Your Own Adventure
+          <select name="ChartChoice" class="Select">
+            <option value="choose">--Choose Wisely--</option>
+            <option value="radar">Radar</option>
+            <option value="pie">Pie</option>
+            <option value="polarArea">Polar</option>
+            <option value="bubble">Bubble</option>
+          </select>
+        </label>
+        <button type="submit" id="submitButton">Select</button>
+      </div>
     </div>
   </section>
   <div id="extraCharts">
