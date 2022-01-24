@@ -199,10 +199,10 @@ function packClicks() {
     let stringyClicks = JSON.stringify(totalClicks);
     localStorage.setItem('clicks', stringyClicks);
   } else {
-  let stringyClicks = JSON.stringify(totalClicks);
-  localStorage.setItem('clicks', stringyClicks);
+    let stringyClicks = JSON.stringify(totalClicks);
+    localStorage.setItem('clicks', stringyClicks);
+  }
 }
-
 
 function unpackClicks() {
   let unpackedClicks = localStorage.getItem('clicks');
@@ -216,6 +216,7 @@ function unpackClicks() {
     totalClicks = 0;
   }
 }
+
 //The main code for selecting the images shown to the user.
 function handleClick(event) {
   if (event.target === productSection) {
@@ -233,6 +234,7 @@ function handleClick(event) {
     button.addEventListener('click', buttonClick);
     let buttonDiv = document.getElementById('buttonDiv');
     buttonDiv.setAttribute('class','buttons');
+    packProduct();
     renderChart('bar',chartInfo);
     createButton('Line');
     createButton('Reset');
@@ -291,5 +293,3 @@ createNumberArray(uniqueNumberVariable);
 createImageElement();
 renderImages();
 productSection.addEventListener('click',handleClick);
-
-
