@@ -203,6 +203,7 @@ function handleSubmit(event) {
   document.getElementById(userChartType).style.backgroundColor = '#181A18';
   renderChart(userChartType, canvas2);
   document.getElementById(userChartType).scrollIntoView({behavior: 'smooth'});
+  document.getElementById('chartChoice').id = 'hiddenDiv';
 }
 
 function packClicks() {
