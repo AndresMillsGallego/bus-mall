@@ -10,9 +10,9 @@ let numberArray = [];
 let imageElementQuantity = 3; // This variable sets the number of products/images to display
 let uniqueNumberVariable = imageElementQuantity * 2;//Added this separate variable to ensure 3 unique numbers that don't repeat
 let clickCounter = 0;
-let maxClickValue = 5; //Set this to 25 for labe1
+let maxClickValue = 25; //Set this to 25 for labe1
 let totalClicks = 0;
-console.log(totalClicks);
+
 const productSection = document.getElementById('imageSection');
 const button = document.getElementById('buttonDiv');
 const chartInfo = document.getElementById('myCanvas');
@@ -85,6 +85,7 @@ function renderChart(chartType, elementId) {
     datasets: [{
       label: 'Number of Views',
       data: productViewsArray,
+      fill: false,
       backgroundColor: 'yellow',
       borderColor: 'azure',
       borderRadius: 2,
@@ -97,6 +98,7 @@ function renderChart(chartType, elementId) {
     {
       label: 'Number of Likes',
       data: productLikesArray,
+      fill: false,
       backgroundColor: 'fuchsia',
       borderColor: 'azure',
       borderRadius: 2,
@@ -194,6 +196,8 @@ function buttonClick(event) {
   console.log(totalClicks);
 }
 
+//This code is to give the user the option of a chart type from a drop down menu.
+//Changing the class allows this div to appear only when totalClicks reach > 4
 function handleSubmit(event) {
   event.preventDefault();
   let userChartType = event.target.chartType.value;
@@ -206,6 +210,7 @@ function handleSubmit(event) {
   document.getElementById('chartChoice').id = 'hiddenDiv';
 }
 
+// This code is to save button clicks (totalClicks) to local storage then unpacks it as needed. 
 function packClicks() {
   let unpackedClicks = localStorage.getItem('clicks');
   if (unpackedClicks) {
@@ -243,7 +248,9 @@ function handleClick(event) {
     productArray[productIndex].hasBeenClicked++;
     clickCounter++;
   }
+  // Code below handles what happens on the page after maxClicks has been reached
   if (clickCounter === maxClickValue) {
+    button.scrollIntoView({behavior: 'smooth'});
     productSection.removeEventListener('click',handleClick);
     button.addEventListener('click', buttonClick);
     let buttonDiv = document.getElementById('buttonDiv');

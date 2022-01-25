@@ -48,7 +48,7 @@ h1 {
 
 #imageSection img:hover {
   cursor: pointer;
-  border-color:red;
+  border-color:dodgerblue;
 }
 
 .fa-bus {
