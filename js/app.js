@@ -210,7 +210,7 @@ function handleSubmit(event) {
   document.getElementById('chartChoice').id = 'hiddenDiv';
 }
 
-// This code is to save button clicks (totalClicks) to local storage then unpacks it as needed. 
+// This code is to save button clicks (totalClicks) to local storage then unpacks it as needed.
 function packClicks() {
   let unpackedClicks = localStorage.getItem('clicks');
   if (unpackedClicks) {
